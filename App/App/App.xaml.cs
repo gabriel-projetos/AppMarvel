@@ -1,3 +1,5 @@
+using App.Interfaces;
+using App.Services;
 using App.ViewModels;
 using App.Views;
 using Prism;
@@ -28,6 +30,11 @@ namespace App
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<ListHeroesView, ListHeroesViewViewModel>();
+
+
+
+            containerRegistry.RegisterSingleton<IHeroes, HeroesService>();
         }
     }
 }

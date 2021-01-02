@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="App.Views.ListHeroesView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True">
+
+    <Grid Margin="10" BackgroundColor="LightSkyBlue">
+        <RefreshView IsRefreshing="{Binding IsBusy}">
+            <CollectionView ItemsSource="{Binding Herois}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="40*, 60*" RowDefinitions="70*, 30*">
+                            <Image
+                                HeightRequest="95"
+                                Source="{Binding GetImage}"
+                                WidthRequest="100" />
+                            <Label Grid.Column="1" Text="{Binding name}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>
