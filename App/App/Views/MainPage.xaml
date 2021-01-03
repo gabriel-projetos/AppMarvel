@@ -6,8 +6,17 @@
     Title="{Binding Title}">
 
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
-        <Button Command="{Binding GoListPageHeroesCommand}" />
+        <StackLayout Margin="2" Orientation="Horizontal">
+            <Label
+                HorizontalTextAlignment="End"
+                Text="Limite de dados"
+                VerticalTextAlignment="End" />
+            <Entry
+                HorizontalOptions="FillAndExpand"
+                Text="{Binding Limit}"
+                VerticalOptions="FillAndExpand" />
+        </StackLayout>
+        <Button Command="{Binding GoListPageHeroesCommand}" Text="Lista de Personagens" />
     </StackLayout>
 
 </ContentPage>

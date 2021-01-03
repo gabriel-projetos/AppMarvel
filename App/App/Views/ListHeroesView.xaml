@@ -5,23 +5,76 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
     Title="{Binding Title}"
-    prism:ViewModelLocator.AutowireViewModel="True">
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="#caf0f8">
 
-    <Grid Margin="10" BackgroundColor="LightSkyBlue">
-        <RefreshView IsRefreshing="{Binding IsBusy}">
-            <CollectionView ItemsSource="{Binding Herois}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid ColumnDefinitions="40*, 60*" RowDefinitions="70*, 30*">
-                            <Image
-                                HeightRequest="95"
-                                Source="{Binding GetImage}"
-                                WidthRequest="100" />
-                            <Label Grid.Column="1" Text="{Binding name}" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </RefreshView>
+    <Grid Margin="10">
+        <ListView
+            CachingStrategy="RecycleElement"
+            HasUnevenRows="True"
+            HorizontalScrollBarVisibility="Never"
+            IsRefreshing="{Binding IsBusy}"
+            ItemsSource="{Binding Herois}"
+            VerticalScrollBarVisibility="Never">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame
+                            Margin="0,10,0,0"
+                            Padding="10"
+                            BackgroundColor="White"
+                            BorderColor="Black">
+                            <StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="150"
+                                        Source="{Binding GetImage}" />
+                                    <StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Nome: " TextColor="Black" />
+                                            <Label Text="{Binding name, FallbackValue='Héroi sem nome'}" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Quantidade de Quadrinhos: " TextColor="Black" />
+                                            <Label Text="{Binding comics.available, FallbackValue='0'}" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Quantidade de Séries: " TextColor="Black" />
+                                            <Label Text="{Binding series.available, FallbackValue='0'}" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Quantidade de Histórias: " TextColor="Black" />
+                                            <Label Text="{Binding stories.avaiable, FallbackValue='0'}" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Quantidade de Eventos: " TextColor="Black" />
+                                            <Label Text="{Binding events.avaiable, FallbackValue='0'}" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Quantidade de Documentos: " TextColor="Black" />
+                                            <Label Text="{Binding urls.Count, FallbackValue='0'}" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+
+                                <StackLayout>
+                                    <StackLayout BindableLayout.ItemsSource="{Binding urls}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout Orientation="Vertical" Spacing="0">
+                                                    <Label Text="{Binding type, FallbackValue='Sem dados'}" TextColor="Black" />
+                                                    <Label Text="{Binding url, FallbackValue='Sem dados'}" />
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </ContentPage>

@@ -9,6 +9,8 @@ namespace App.ViewModels
     {
         private readonly INavigationService _navigation;
         public ICommand GoListPageHeroesCommand { get; set; }
+        public string Limit { get; set; }
+
         public MainPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
@@ -17,8 +19,10 @@ namespace App.ViewModels
 
             GoListPageHeroesCommand = new Command(() =>
             {
-                var param = new NavigationParameters();
-                param.Add("p1", "testeEnvio");
+                var param = new NavigationParameters
+                {
+                    { ParansKeys.Limite, Limit }
+                };
                 _navigation.NavigateAsync(nameof(ListHeroesView), param);
             });
         }

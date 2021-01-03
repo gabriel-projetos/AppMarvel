@@ -39,14 +39,23 @@ namespace App.ViewModels
         public async override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
-            var param = parameters.GetValue<string>("p1");
+            var limit = parameters.GetValue<string>(ParansKeys.Limite);
 
-            IsBusy = true;
-            var heroes = await _heroes.GetHeroes();
-
-            Herois = new ObservableCollection<Result>(heroes.data.results);
-
-            IsBusy = false;
+            try
+            {
+                IsBusy = true;
+                var heroes = await _heroes.GetHeroes(limit);
+                Herois = new ObservableCollection<Result>(heroes.data.results);
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Atenção", $"Error:{ex.Message}", "Ok");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+            
         }
     }
 }

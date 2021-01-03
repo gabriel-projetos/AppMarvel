@@ -9,6 +9,6 @@ namespace App.Interfaces
 {
     public interface IHeroes
     {
-        Task<Hero> GetHeroes();
+        Task<Hero> GetHeroes(string limite);
     }
 }
