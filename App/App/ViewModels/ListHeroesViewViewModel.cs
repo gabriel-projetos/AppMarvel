@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace App.ViewModels
 {
@@ -35,15 +36,23 @@ namespace App.ViewModels
         }
 
 
+
         //OnAppearing
         public async override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
             var limit = parameters.GetValue<string>(ParansKeys.Limite);
+            await GetHeroes(limit);
 
+        }
+
+        public async Task GetHeroes(string limit)
+        {
             try
             {
                 IsBusy = true;
+                //Depender do comportamento e não da implementação concreta
+                //fazer a codificação dependendo do comportamento e não da implementação concreta
                 var heroes = await _heroes.GetHeroes(limit);
                 Herois = new ObservableCollection<Result>(heroes.data.results);
             }
@@ -55,7 +64,6 @@ namespace App.ViewModels
             {
                 IsBusy = false;
             }
-            
         }
     }
 }

@@ -51,10 +51,6 @@ namespace App.Services
         //Referencia
         //https://docs.microsoft.com/pt-br/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests
         static readonly HttpClient _client = new HttpClient();
-        public HeroesService()
-        {
-            
-        }
         public async Task<Hero> GetHeroes(string limite)
         {
             //if(_client == null)
