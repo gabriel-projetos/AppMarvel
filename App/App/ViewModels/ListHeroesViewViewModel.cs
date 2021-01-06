@@ -42,8 +42,29 @@ namespace App.ViewModels
         {
             base.Initialize(parameters);
             var limit = parameters.GetValue<string>(ParansKeys.Limite);
-            await GetHeroes(limit);
+            //await GetHeroes(limit);
+            await GetHeroesNetwork(limit);
 
+        }
+
+        private async Task GetHeroesNetwork(string limit)
+        {
+            try
+            {
+                IsBusy = true;
+                //Depender do comportamento e não da implementação concreta
+                //fazer a codificação dependendo do comportamento e não da implementação concreta
+                var heroes = await _heroes.GetHeroesWichFactory(limit);
+                Herois = new ObservableCollection<Result>(heroes.data.results);
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Atenção", $"Error:{ex.Message}", "Ok");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         public async Task GetHeroes(string limit)

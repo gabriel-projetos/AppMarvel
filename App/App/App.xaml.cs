@@ -35,6 +35,7 @@ namespace App
 
 
             containerRegistry.RegisterSingleton<IHeroes, HeroesService>();
+            containerRegistry.RegisterScoped<INetworkService, NetworkService>();
         }
     }
 }

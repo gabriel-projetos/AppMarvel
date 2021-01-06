@@ -25,6 +25,12 @@ namespace App.Services
         const string _APIKEY = "14c462d9e685d41ea836a2b7028b9b80";
         const string _APIKEYPRIVATE = "95177538d4435a16b3ed91862a725319119b03e6";
 
+        private readonly INetworkService _networkService;
+        public HeroesService(INetworkService networkService)
+        {
+            _networkService = networkService;
+        }
+
         public string GetUrl(string limite)
         {
             using(MD5 generateMD5 = MD5.Create())
@@ -255,6 +261,22 @@ namespace App.Services
                     throw ex;
                 }
             
+        }
+
+        public async Task<Hero> GetHeroesWichFactory(string limite)
+        {
+            var func = new Func<Task<Hero>>(() => HeroGetRequest(limite));
+            return await _networkService.WaitAndRetry<Hero>(func, new Func<int,
+                TimeSpan>(time => TimeSpan.FromSeconds(Math.Pow(2, time))), 3);
+        }
+
+        async Task<Hero> HeroGetRequest(string limite)
+        {
+            var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync(GetUrl(limite));
+
+            var rawResponse = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Hero>(rawResponse);
         }
     }
 }

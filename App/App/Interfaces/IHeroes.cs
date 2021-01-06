@@ -10,5 +10,6 @@ namespace App.Interfaces
     public interface IHeroes
     {
         Task<Hero> GetHeroes(string limite);
+        Task<Hero> GetHeroesWichFactory(string limite);
     }
 }
