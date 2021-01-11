@@ -9,7 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Android", "App\App.Andr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.iOS", "App\App.iOS\App.iOS.csproj", "{A0A243B4-06AD-4804-8C42-7DDA83E767CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitAppTest", "NUnitAppTest\NUnitAppTest.csproj", "{14F2E624-5F94-4ED8-A6B1-F403C6B5B690}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitAppTest", "NUnitAppTest\NUnitAppTest.csproj", "{14F2E624-5F94-4ED8-A6B1-F403C6B5B690}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1A2884A4-5A6D-4E3A-8551-AED126964FA0}"
+	ProjectSection(SolutionItems) = preProject
+		ObersavacoesTestes.txt = ObersavacoesTestes.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,12 @@
+//Começe a programar pensando no resultado esperado
+Use um post-it e escreva o resultado esperado.
+Se não sabe, pergunte
+Escreve o resultado esperado escreve um comentario no método
+Mude a ordem na hora de cordar: -> Nome do método -> tipo de retorno -> return -> lógica 
+
+
+ Nomes de métodos com o devido nome correspondente a ação do proprio
+
+ se temos o controle da classe podemos criar mock da classe concreta, o metodo só precisa ser virtual
+
+ Separar o código de configuração do código de execução

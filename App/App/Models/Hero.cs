@@ -82,10 +82,10 @@ namespace App.Models
         public string name { get; set; }
         public string description { get; set; }
 
-        [Jil.JilDirective(true), JsonIgnore]
+        //[Jil.JilDirective(true), JsonIgnore]
         public DateTime modified { get; set; }
 
-        [Jil.JilDirective(true), JsonIgnore]
+        //[Jil.JilDirective(true), JsonIgnore]
         public Thumbnail thumbnail { get; set; }
         public string resourceURI { get; set; }
         public Comics comics { get; set; }
@@ -94,10 +94,10 @@ namespace App.Models
         public Events events { get; set; }
         public List<Url> urls { get; set; }
 
-        //public string GetImage
-        //{
-        //    get { return $"{thumbnail.path}.{thumbnail.extension}"; }
-        //}
+        public string GetImage
+        {
+            get { return $"{thumbnail.path}.{thumbnail.extension}"; }
+        }
 
     }
 

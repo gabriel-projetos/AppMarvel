@@ -1,5 +1,6 @@
 ﻿using App.Interfaces;
 using App.Models;
+using App.Services;
 using App.ViewModels;
 using Moq;
 using NUnit.Framework;
@@ -10,40 +11,56 @@ using System.Threading.Tasks;
 
 namespace NUnitAppTest
 {
+    //A classe a ser testada com o Nunit deve ser decorada com TextFixture.
     [TestFixture]
     public class ListHeroesViewModelTest
     {
         /*"Os testes podem mudar para o código, mas o código nunca mudará para os testes."*/
+        /*Para testar precisamos pensar no resultado esperado, e não em como fazer*/
+        /*precisamos pensar no resultado e nao no procesamento */
 
-        //Um construtor
+        //Um construtor atributo de configuração é escrito será executado primeiro antes de qualquer método de teste, se tive mais de um é executado de cima para baixo
         [SetUp]
         public void Setup()
         {
             
         }
 
-        //[TestCase("5", "10")]
+        //Test: Este atributo identifica o método a ser testado
+        //TearDown: será executado por último após a execução do Caso de teste., se tiver mais de um, é executado de baixo para cima
+        //TestCase: é passado como passametro
+        [TestCase("5")]
+        [TestCase("10")]
+        [TestCase("-1")]
+        [TestCase("0")]
+        [TestCase("100")]
+        //[TearDown]
         [Test]
-        public async Task DeveObterAListaDeHerois()
+        public async Task Deve_Obter_A_Lista_De_Herois_Dado_A_Quantidade_Menor_Ou_Igual_A_100_E_Maior_Que_Zero(string quantidadeHerois)
         {
-            Hero hero = new Hero();
-            var mockRepo = new Mock<IHeroes>();
-            mockRepo.Setup(x => x.GetHeroes("5")).ReturnsAsync(hero) ;
-
-            ListHeroesViewViewModel listHeroesViewViewModel = new ListHeroesViewViewModel(null, mockRepo.Object);
-            await listHeroesViewViewModel.GetHeroes("5");
-
-
-            List<Hero> listaHeroes = new List<Hero>() 
+            var hero = new Hero
             {
-                new Hero(),
-                new Hero(),
-                new Hero(),
-                new Hero(),
-                new Hero()
+                data = new Data()
             };
-            
-            Assert.AreEqual(listaHeroes.Count, listHeroesViewViewModel.Herois.Count);
+            hero.data.results = new List<Result>() { new Result { id = 10 } };
+            //Arrang
+            //Mock me disponibiliza um objeto concreto 
+            var mockRepo = new Mock<IHeroes>();
+            //mockRepo.Setup(hero => hero.GetHeroes(quantidadeHerois)).ReturnsAsync(hero);
+            HeroesService heroesService = new HeroesService(null);
+            ListHeroesViewViewModel listHeroesViewViewModel = new ListHeroesViewViewModel(null, heroesService);
+
+
+            //action - ação
+            await listHeroesViewViewModel.GetHeroes(quantidadeHerois);
+
+            //assert - Comparação
+            if(quantidadeHerois.Equals("5"))
+                Assert.AreEqual(5, listHeroesViewViewModel.Herois.Count);
+            else if (quantidadeHerois.Equals("10"))
+                Assert.AreEqual(10, listHeroesViewViewModel.Herois.Count);
+            else
+                Assert.AreEqual(100, listHeroesViewViewModel.Herois.Count);
         }
     }
 }
