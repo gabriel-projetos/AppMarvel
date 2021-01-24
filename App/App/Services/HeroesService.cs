@@ -7,6 +7,7 @@ using Polly.Fallback;
 using Polly.Retry;
 using Polly.Timeout;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -18,6 +19,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace App.Services
 {
@@ -59,7 +61,7 @@ namespace App.Services
                 return $"{_URL}?limit={limite}&ts={timestamp}&apikey={_APIKEY}&hash={hash}";
             }
         }
-
+        
         public AsyncRetryPolicy<HttpResponseMessage> _httpRetryPolicy;
         public AsyncTimeoutPolicy _timeoutPolicy;
         //public AsyncFallbackPolicy _fallBackPolicy;
@@ -69,7 +71,7 @@ namespace App.Services
         //Referencia
         //https://docs.microsoft.com/pt-br/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests
         static readonly HttpClient _client = new HttpClient();
-        public async Task<Hero> GetHeroes(string limite)
+        public async Task<IEnumerable<Result>> GetHeroes(string limite)
         {
             //if(_client == null)
             //{
@@ -137,7 +139,8 @@ namespace App.Services
 
                 if (response.StatusCode != HttpStatusCode.OK) 
                 {
-                    return new Hero();
+                    var newtonSoft = string.IsNullOrEmpty(await response.Content.ReadAsStringAsync()) ? JsonConvert.DeserializeObject<Hero>(await response.Content.ReadAsStringAsync()) : new Hero();
+                    return new List<Result>().DefaultIfEmpty();
                 }
                 else
                 {
@@ -179,7 +182,7 @@ namespace App.Services
                     //https://stackoverflow.com/questions/8707755/how-to-know-the-size-of-the-string-in-bytes
                     var howManyBytes = json.Length * sizeof(Char);
 
-                    return newtonSoft;
+                    return newtonSoft.data.results.EmptyIfNull();
                 }
 
 
@@ -273,5 +276,7 @@ namespace App.Services
             var rawResponse = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<Hero>(rawResponse);
         }
+
+        
     }
 }

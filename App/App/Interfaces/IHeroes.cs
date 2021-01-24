@@ -9,7 +9,7 @@ namespace App.Interfaces
 {
     public interface IHeroes
     {
-        Task<Hero> GetHeroes(string limite);
+        Task<IEnumerable<Result>> GetHeroes(string limite);
         Task<Hero> GetHeroesWichFactory(string limite);
     }
 }

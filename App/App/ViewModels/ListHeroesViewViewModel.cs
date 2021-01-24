@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace App.ViewModels
 {
@@ -43,8 +44,7 @@ namespace App.ViewModels
                 //Depender do comportamento e não da implementação concreta
                 //fazer a codificação dependendo do comportamento e não da implementação concreta
                 var heroes = await _heroes.GetHeroes(limit);
-                if (heroes.data != null)
-                    Herois = new ObservableCollection<Result>(heroes.data.results);
+                Herois = new ObservableCollection<Result>(heroes);
             }
             catch (Exception ex)
             {
@@ -86,7 +86,5 @@ namespace App.ViewModels
                 IsBusy = false;
             }
         }
-
-       
     }
 }

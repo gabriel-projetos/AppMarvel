@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using App.Models;
+using App.ViewModels;
+using Xamarin.Forms;
 
 namespace App.Views
 {
@@ -7,6 +9,11 @@ namespace App.Views
         public ListHeroesView()
         {
             InitializeComponent();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
         }
     }
 }
