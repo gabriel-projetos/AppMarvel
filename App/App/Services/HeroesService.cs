@@ -1,7 +1,9 @@
 ﻿using App.Interfaces;
+using App.JsonResolver;
 using App.Models;
 using Jil;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Polly;
 using Polly.Fallback;
 using Polly.Retry;
@@ -15,6 +17,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -150,13 +153,15 @@ namespace App.Services
                     //var employeeDeserialized = JSON.Deserialize<Hero>(await response.Content.ReadAsStringAsync(), new Options(dateFormat: DateTimeFormat.MicrosoftStyleMillisecondsSinceUnixEpoch));
                     //TimerJill.Stop();
                     //var tempoDecorridoJil = TimerJill.Elapsed.TotalSeconds;
-
+                    var contractResolver = new CustomContractResolver();
 
                     //Teste using newtonsof
                     Stopwatch TimerNewton = new Stopwatch();
                     TimerNewton.Start();
                     //forma correta  de utilizar, sem jogar atribuir para uma string antes de realizar a deserialização.
-                    var newtonSoft = JsonConvert.DeserializeObject<Hero>(await response.Content.ReadAsStringAsync());
+                    var newtonSoft = JsonConvert.DeserializeObject<Hero>(await response.Content.ReadAsStringAsync(), new JsonSerializerSettings {
+                        ContractResolver = contractResolver
+                    });
                     TimerNewton.Stop();
                     var tempoDecorridoNewton = TimerNewton.Elapsed.TotalSeconds;
 
